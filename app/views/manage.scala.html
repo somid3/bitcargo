@@ -1,0 +1,86 @@
+@(cargo: Cargo, updateEmailForm: Form[views.forms.CargoUpdateEmailForm])
+
+
+@if(flash.get("success") != null) {
+    <div class="alert alert-success text-center">@flash.get("success")</div>
+}
+
+@if(cargo != null) {
+
+    <div class="row marketing center-block">
+        <div>
+            <h4>Instructions:</h4>
+
+            <ul class="list-group">
+                <li class="list-group-item">Install a <a href="http://www.bittorrent.com/sync" target="_new">BitTorrent Sync</a> client on your favorite device</li>
+                <li class="list-group-item">Create a new folder on your device using your BitTorrent Sync client</li>
+                <li class="list-group-item">Apply the <span class="mark bg-green">Read Write</span> secret below to your new folder. Repeat on other devices</li>
+                <li class="list-group-item">Share your synced folder with friends by using the <span class="mark bg-gray">Read Only</span> or <span class="mark-gray">Encrypted</span> secret</li>
+            </ul>
+
+            <br/>
+            <h4>Setup:</h4>
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <p>
+                    <form action="/manage/update_email" method="post">
+
+                        @if(cargo.user == null) {
+                            Finish your setup by providing your email address
+                        } else {
+                            To change ownership, enter a new email address
+                        }
+
+                        &mdash;
+
+                        <input type="hidden" name="cargoId" value="@updateEmailForm("cargoId").valueOr("")">
+                        <input type="hidden" name="cargoManageUri" value="@updateEmailForm("cargoManageUri").valueOr("")">
+                        <input type="text" name="newEmail" placeholder="Email (Optional)" value="@updateEmailForm("newEmail").valueOr("")">
+                        <input type="submit" value="Set Email">
+                    </form>
+                    </p>
+
+                    @if(cargo.user == null) {
+                    <p>
+                        Otherwise, the secrets below will stop syncing after ten days on <span class="mark bg-gray">@cargo.killOn</span>
+                    </p>
+                    }
+
+
+                </div>
+            </div>
+
+            <br/>
+            <h4>Secrets:</h4>
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h4>Read Write</h4>
+                    <p>
+                    <div class="mark text-center bg-green"><h4>@cargo.secretReadWrite</h4></div>
+                    <h4><small>Share with devices that should be able to read, write, and delete files from the synced space</small></h4>
+                    </p>
+
+                    <br/>
+
+                    <h4>Read Only</h4>
+                    <p>
+                        <div class="mark text-center bg-gray"><h4>@cargo.secretReadOnly</h4></div>
+                        <h4><small>Share with friends and family who should only read files from the synced space</small></h4>
+                    </p>
+
+                    <br/>
+
+                    <h4>Encrypted</h4>
+                    <p>
+                    <div class="mark text-center bg-gray"><h4>@cargo.secretEncrypted</h4></div>
+                    <h4><small>Share with backup services that will safely backup your files in an encrypted fashion</small></h4>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

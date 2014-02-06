@@ -1,0 +1,22 @@
+
+# Users
+
+- &bob !!models.User
+    email:      bob@example.com
+
+- &jane !!models.User
+    email:      jane@example.com
+
+# Cargos
+
+- &cargo1 !!models.Cargo
+    user:      *bob
+    manageUri: ABC
+
+- &cargo2 !!models.Cargo
+    user:      *bob
+    manageUri: DEF
+
+- &cargo3 !!models.Cargo
+    user:      *jane
+    manageUri: GHI

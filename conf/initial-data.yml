@@ -1,0 +1,25 @@
+# Users
+
+users:
+
+- &bob !!models.User
+    email:      bob@example.com
+
+- &jane !!models.User
+    email:      jane@example.com
+
+# Cargos
+
+cargos:
+
+- &cargo1 !!models.Cargo
+    user:      *bob
+
+- &cargo2 !!models.Cargo
+    user:      *bob
+
+- &cargo3 !!models.Cargo
+    user:      *jane
+
+- &cargo4 !!models.Cargo
+    user:      *jane
